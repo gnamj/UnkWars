@@ -1,5 +1,8 @@
-package gnamj.unkwars;
+package gnamj.unkwars.games;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -55,5 +58,15 @@ public class SkyDuel extends Game {
 
         if (event.getPlayer().equals(getParticipant(0))) end(getParticipant(1));
         else if (event.getPlayer().equals(getParticipant(1))) end(getParticipant(0));
+    }
+
+    public static class SkyDuelExecutor implements CommandExecutor {
+
+        public static final String commandLabel = "duel";
+
+        @Override
+        public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+            return false;
+        }
     }
 }
