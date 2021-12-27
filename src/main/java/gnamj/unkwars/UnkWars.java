@@ -15,9 +15,8 @@ public final class UnkWars extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        if (Duel.currentDuel != null) {
-            Duel.currentDuel.end();
-        }
+        if (Game.currentGame != null)
+            Game.currentGame.end();
     }
 
     private void confirmUpAndReadyMessage() {

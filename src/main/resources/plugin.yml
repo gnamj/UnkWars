@@ -1,7 +1,7 @@
 name: UnkWars
 version: '${project.version}'
 main: gnamj.unkwars.UnkWars
-api-version: 1.18
+api-version: 1.12
 prefix: <Unk>
 load: STARTUP
 authors: [ gnamj, Jackoston ]
