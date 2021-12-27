@@ -89,10 +89,12 @@ public class Duel implements Listener {
     {
         if(!event.getPlayer().equals(p1) && !event.getPlayer().equals(p2))
             return;
+
         if(event.getPlayer().equals(p1))
             score2 = winningScore;
         else if(event.getPlayer().equals(p2))
             score1 = winningScore;
+
         checkWinCondition();
     }
 }
