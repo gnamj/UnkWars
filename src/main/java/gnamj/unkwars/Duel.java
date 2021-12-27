@@ -87,12 +87,12 @@ public class Duel implements Listener {
     @EventHandler
     private void onPlayerLeave(PlayerQuitEvent event)
     {
-        if(!event.getPlayer().equals(p1) && !event.getPlayer().equals(p2))
+        if (!event.getPlayer().equals(p1) && !event.getPlayer().equals(p2))
             return;
 
-        if(event.getPlayer().equals(p1))
+        if (event.getPlayer().equals(p1))
             score2 = winningScore;
-        else if(event.getPlayer().equals(p2))
+        else if (event.getPlayer().equals(p2))
             score1 = winningScore;
 
         checkWinCondition();
