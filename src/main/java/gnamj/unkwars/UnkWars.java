@@ -12,7 +12,11 @@ public final class UnkWars extends JavaPlugin {
     //BUTY BUT FART, STUPID STUPID
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        confirmUpAndReadyMessage();
+    }
 
+
+    private void confirmUpAndReadyMessage() {
+        System.out.println("Up and ready.");
     }
 }
