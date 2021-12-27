@@ -7,6 +7,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public class Duel implements Listener {
@@ -17,12 +18,18 @@ public class Duel implements Listener {
 
     private final Player p1;
     private int score1 = 0;
+    private ItemStack[] inv1;
+
     private final Player p2;
     private int score2 = 0;
+    private ItemStack[] inv2;
 
     public Duel(Player p1, Player p2) {
         this.p1 = p1;
         this.p2 = p2;
+
+        inv1 = new ItemStack[p1.getInventory().getContents().length];
+        inv2 = new ItemStack[p2.getInventory().getContents().length];
 
         Bukkit.getServer().getPluginManager().registerEvents(this, UnkWars.plugin);
         currentDuel = this;
@@ -35,7 +42,10 @@ public class Duel implements Listener {
     }
 
     private void saveInventories() {
-
+        for (int i = 0; i < inv1.length; i++) {
+            inv1[i] = p1.getInventory().getContents()[i];
+            inv2[i] = p2.getInventory().getContents()[i];
+        }
     }
 
     private void generateField() {
@@ -77,7 +87,8 @@ public class Duel implements Listener {
     }
 
     private void restoreInventories() {
-
+        p1.getInventory().setContents(inv1);
+        p2.getInventory().setContents(inv2);
     }
 
     private void clearField() {
