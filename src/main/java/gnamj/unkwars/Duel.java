@@ -65,7 +65,7 @@ public class Duel implements Listener {
 
     public void end() {
 
-
+        clearField();
         HandlerList.unregisterAll(this);
         currentDuel = null;
     }
