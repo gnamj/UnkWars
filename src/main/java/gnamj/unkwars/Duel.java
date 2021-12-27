@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.Nullable;
 
 public class Duel implements Listener {
@@ -81,5 +82,17 @@ public class Duel implements Listener {
 
     private void clearField() {
 
+    }
+
+    @EventHandler
+    private void onPlayerLeave(PlayerQuitEvent event)
+    {
+        if(!event.getPlayer().equals(p1) && !event.getPlayer().equals(p2))
+            return;
+        if(event.getPlayer().equals(p1))
+            score2 = winningScore;
+        else if(event.getPlayer().equals(p2))
+            score1 = winningScore;
+        checkWinCondition();
     }
 }
