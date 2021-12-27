@@ -13,6 +13,13 @@ public final class UnkWars extends JavaPlugin {
         confirmUpAndReadyMessage();
     }
 
+    @Override
+    public void onDisable() {
+        if (Duel.currentDuel != null) {
+            Duel.currentDuel.end();
+        }
+    }
+
     private void confirmUpAndReadyMessage() {
         System.out.println("Up and ready.");
     }

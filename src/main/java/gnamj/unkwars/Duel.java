@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -12,8 +13,12 @@ public class Duel implements Listener {
 
     public static @Nullable Duel currentDuel;
 
+    private static final int winningScore = 5;
+
     private final Player p1;
+    private int score1 = 0;
     private final Player p2;
+    private int score2 = 0;
 
     public Duel(Player p1, Player p2) {
         this.p1 = p1;
@@ -38,10 +43,20 @@ public class Duel implements Listener {
     }
 
     @EventHandler
-    private void onWinCondition() {
+    private void onPlayerDeath(PlayerDeathEvent event) {
+        if (!event.getEntity().equals(p1) && !event.getEntity().equals(p2)) return;
 
-        rewardWinner(p1);
-        end();
+        if (event.getEntity().equals(p1) && p1.getKiller() != null && p1.getKiller().equals(p2)) score2++;
+        else if (event.getEntity().equals(p2) && p2.getKiller() != null && p2.getKiller().equals(p1)) score1++;
+
+        if (score1 == winningScore) {
+            rewardWinner(p1);
+            end();
+        }
+        else if (score2 == winningScore) {
+            rewardWinner(p2);
+            end();
+        }
     }
 
     private void rewardWinner(Player winner) {
