@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.jetbrains.annotations.Nullable;
 
-
 public class Duel implements Listener {
 
     public static @Nullable Duel currentDuel;
