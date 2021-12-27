@@ -42,10 +42,18 @@ public class Duel implements Listener {
     }
 
     private void saveInventories() {
+        ItemStack[] tempInv1 = new ItemStack[inv1.length];
+        ItemStack[] tempInv2 = new ItemStack[inv2.length];
+
         for (int i = 0; i < inv1.length; i++) {
             inv1[i] = p1.getInventory().getContents()[i];
+            tempInv1[i] = p1.getInventory().getContents()[i].clone();
             inv2[i] = p2.getInventory().getContents()[i];
+            tempInv2[i] = p2.getInventory().getContents()[i].clone();
         }
+
+        p1.getInventory().setContents(tempInv1);
+        p2.getInventory().setContents(tempInv2);
     }
 
     private void generateField() {
