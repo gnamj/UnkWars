@@ -45,9 +45,15 @@ public class Duel implements Listener {
     private void onPlayerDeath(PlayerDeathEvent event) {
         if (!event.getEntity().equals(p1) && !event.getEntity().equals(p2)) return;
 
-        if (event.getEntity().equals(p1) && p1.getKiller() != null && p1.getKiller().equals(p2)) score2++;
-        else if (event.getEntity().equals(p2) && p2.getKiller() != null && p2.getKiller().equals(p1)) score1++;
+        if (event.getEntity().equals(p1) && p1.getKiller() != null && p1.getKiller().equals(p2))
+            score2++;
+        else if (event.getEntity().equals(p2) && p2.getKiller() != null && p2.getKiller().equals(p1))
+            score1++;
 
+        checkWinCondition();
+    }
+
+    private void checkWinCondition() {
         if (score1 == winningScore) {
             rewardWinner(p1);
             end();
