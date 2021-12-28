@@ -22,6 +22,10 @@ public class SkyDuel extends Game {
 
     }
 
+    private void generateField() {
+
+    }
+
     private void checkWinCondition() {
         if (scores[0] == winningScore)
             end(getParticipant(0));
@@ -58,6 +62,7 @@ public class SkyDuel extends Game {
 
         if (event.getPlayer().equals(getParticipant(0))) end(getParticipant(1));
         else if (event.getPlayer().equals(getParticipant(1))) end(getParticipant(0));
+
     }
 
     public static class SkyDuelExecutor implements CommandExecutor {
