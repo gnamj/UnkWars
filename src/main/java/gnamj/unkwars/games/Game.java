@@ -2,9 +2,6 @@ package gnamj.unkwars.games;
 
 import gnamj.unkwars.UnkWars;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -13,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class Game implements Listener {
+
+    public static final String gameWorldName = "Game";
 
     public static @Nullable Game currentGame;
 

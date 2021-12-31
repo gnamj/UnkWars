@@ -1,5 +1,7 @@
 package gnamj.unkwars.games;
 
+import gnamj.unkwars.Util;
+import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -7,10 +9,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.generator.ChunkGenerator;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Random;
 
 public class SkyDuel extends Game {
 
+    private static final String worldName = "SkyDuel";
     private static final int winningScore = 5;
 
     public SkyDuel(@NotNull Player player1, @NotNull Player player2) {
@@ -19,10 +25,53 @@ public class SkyDuel extends Game {
 
     @Override
     protected void initialize() {
+        generateMap();
+        teleportPlayers();
+    }
 
+    private void generateMap() {
+        generateWorld();
+        generateField();
+    }
+
+    private void generateWorld() {
+        Bukkit.getWorlds().remove(Bukkit.getWorld(worldName));
+        Util.deleteDirectory(Bukkit.getWorld(worldName).getWorldFolder());
+        Bukkit.getWorlds().remove(Bukkit.getWorld(worldName));
+
+        class EmptyGenerator extends ChunkGenerator {
+
+            @Override
+            public ChunkData generateChunkData(World world, Random random, int x, int z, BiomeGrid biome) {
+                ChunkData data = createChunkData(world);
+                data.setRegion(0, 15, 0, 15, 1, 1, Material.AIR);
+                return data;
+            }
+        }
+
+        WorldCreator creator = new WorldCreator(worldName)
+                .seed(0)
+                .type(WorldType.FLAT)
+                .generator(new EmptyGenerator())
+                .generateStructures(false);
+
+        World world = creator.createWorld();
+        world.setSpawnLocation(new Location(world, 0, 0, 0));
+        world.setGameRuleValue("logAdminCommands", "false");
+        world.setGameRuleValue("doDaylightCycle", "false");
+        world.setGameRuleValue("keepInventory", "true");
+        world.setGameRuleValue("doMobLoot", "false");
+        world.setGameRuleValue("spawnRadius", "0");
+        world.setPVP(true);
+        world.setDifficulty(Difficulty.HARD);
+        Bukkit.getWorlds().add(world);
     }
 
     private void generateField() {
+
+    }
+
+    private void teleportPlayers() {
 
     }
 
