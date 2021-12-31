@@ -20,6 +20,7 @@ public abstract class Game implements Listener {
     private final ItemStack[][] inventories;
 
     public Game(@NotNull Player... participants) {
+        if (currentGame != null) throw new IllegalStateException();
         if (participants.length < 2) throw new IllegalArgumentException();
 
         this.participants = participants;
@@ -63,6 +64,7 @@ public abstract class Game implements Listener {
 
     public final void end(@NotNull Player... winners) {
         HandlerList.unregisterAll(this);
+        currentGame = null;
         restoreInventories();
         if (winners.length != 0)
             rewardWinners(winners);

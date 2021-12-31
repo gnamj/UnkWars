@@ -12,6 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.generator.ChunkGenerator;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class SkyDuel extends Game {
@@ -19,7 +20,8 @@ public class SkyDuel extends Game {
     private static final String worldName = "SkyDuel";
     private static final int winningScore = 5;
 
-    public SkyDuel(@NotNull Player player1, @NotNull Player player2) {
+    public SkyDuel(@NotNull Player player1, @NotNull Player player2,
+                   @NotNull Location location1, @NotNull Location location2) {
         super(player1, player2);
     }
 
@@ -116,11 +118,40 @@ public class SkyDuel extends Game {
 
     public static class SkyDuelExecutor implements CommandExecutor {
 
+        public static final HashMap<HashMap<@NotNull Player, @NotNull Location>, @NotNull Player>
+                duelRequests = new HashMap<>();
+
         public static final String commandLabel = "duel";
 
         @Override
         public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-            return false;
+            if (!(sender instanceof Player)) return false;
+
+            if (Game.currentGame != null) return false;
+
+            if (args.length != 1) return false;
+
+            Player player = (Player) sender;
+            Player challengedPlayer = Bukkit.getPlayer(args[0]);
+
+            if (challengedPlayer == null) return false;
+
+            if (player.getName().equals(challengedPlayer.getName())) return false;
+            if (!challengedPlayer.isOnline()) return false;
+
+            if (duelRequests.containsValue(player)) {
+                for (HashMap<Player, Location> request : duelRequests.keySet()) {
+                    if (request.containsKey(challengedPlayer)) {
+                        new SkyDuel(challengedPlayer, player, request.get(challengedPlayer), player.getLocation());
+                        return true;
+                    }
+                }
+            }
+
+            HashMap<Player, @NotNull Location> request = new HashMap<>();
+            request.put(player, player.getLocation());
+            duelRequests.put(request, challengedPlayer);
+            return true;
         }
     }
 }
